@@ -1,31 +1,31 @@
-let myLeads = []
+let myWebsites= []
 const inputEl = document.getElementById("input-el")
 const inputBtn = document.getElementById("input-btn")
 const ulEl = document.getElementById("ul-el")
 const deleteBtn = document.getElementById("delete-btn")
-const leadsFromLocalStorage = JSON.parse( localStorage.getItem("myLeads") )
+const leadsFromLocalStorage = JSON.parse( localStorage.getItem("myWebsites") )
 const tabBtn = document.getElementById("tab-btn")
 
 if (leadsFromLocalStorage) {
-    myLeads = leadsFromLocalStorage
-    render(myLeads)
+    myWebsites = leadsFromLocalStorage
+    render(myWebsites)
 }
 
 tabBtn.addEventListener("click", function(){    
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-        myLeads.push(tabs[0].url)
-        localStorage.setItem("myLeads", JSON.stringify(myLeads) )
-        render(myLeads)
+        myWebsites.push(tabs[0].url)
+        localStorage.setItem("myWebsites", JSON.stringify(myWebsites) )
+        render(myWebsites)
     })
 })
 
-function render(leads) {
+function render(sites) {
     let listItems = ""
-    for (let i = 0; i < leads.length; i++) {
+    for (let i = 0; i < sites.length; i++) {
         listItems += `
             <li>
-                <a target='_blank' href='${leads[i]}'>
-                    ${leads[i]}
+                <a target='_blank' href='${sites[i]}'>
+                    ${sites[i]}
                 </a>
             </li>
         `
@@ -35,13 +35,13 @@ function render(leads) {
 
 deleteBtn.addEventListener("click", function() {
     localStorage.clear()
-    myLeads = []
-    render(myLeads)
+    myWebsites = []
+    render(myWebsites)
 })
 
 inputBtn.addEventListener("click", function() {
-    myLeads.push(inputEl.value)
+    myWebsites.push(inputEl.value)
     inputEl.value = ""
-    localStorage.setItem("myLeads", JSON.stringify(myLeads) )
-    render(myLeads)
+    localStorage.setItem("myWebsites", JSON.stringify(myWebsites) )
+    render(myWebsites)
 })
